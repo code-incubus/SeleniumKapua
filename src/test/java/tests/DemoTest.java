@@ -10,12 +10,19 @@ public class DemoTest extends DriverManager {
 
     @Test
     public void loginWithCorrectCredentials() {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(winChromeDriver);
         loginPage.setUsername("kapua-sys");
         loginPage.setPassword("kapua-password");
         loginPage.clickOnLoginButton();
 
         WelcomePage welcomePage = loginPage.clickOnLoginButton();
         Assert.assertTrue(welcomePage.isPageOpened());
+    }
+    @Test
+    public void test2() {
+        LoginPage loginPage = new LoginPage(winChromeDriver);
+        loginPage.setUsername("username");
+        loginPage.setPassword("password");
+        loginPage.clickOnResetButton();
     }
 }

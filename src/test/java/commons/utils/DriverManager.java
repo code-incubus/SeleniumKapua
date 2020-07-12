@@ -1,26 +1,33 @@
 package commons.utils;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.apache.commons.lang3.SystemUtils;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
-import java.util.concurrent.TimeUnit;
 
-public class DriverManager {
-    public static WebDriver driver = null;
+public abstract class DriverManager extends DriverProperties {
 
-    @BeforeTest
-    public void setup() {
-        System.setProperty("webdriver.gecko.driver", "drivers\\geckodriver\\geckodriver.exe");
-        driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-        driver.get("http://localhost:8080/");
+    @BeforeMethod
+    public void initializeDriver() {
+        if (SystemUtils.IS_OS_WINDOWS) {
+            DriverProperties.setChromePropertyForWindows();
+        } else if (SystemUtils.IS_OS_LINUX) {
+            DriverProperties.setChromePropertyForLinux();
+        } else if (SystemUtils.IS_OS_MAC) {
+            DriverProperties.setChromePropertyForMac();
+        }
     }
 
-    @AfterTest
+    @AfterMethod
     public void close() {
-        driver.close();
+        if (SystemUtils.IS_OS_WINDOWS) {
+            winChromeDriver.quit();
+        } else if (SystemUtils.IS_OS_LINUX) {
+            linuxChromeDriver.quit();
+        } else if (SystemUtils.IS_OS_MAC) {
+            macChromeDriver.quit();
+        }
     }
 }
