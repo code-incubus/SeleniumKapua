@@ -1,33 +1,43 @@
 package commons.utils;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+
+import java.util.concurrent.TimeUnit;
 
 
-public abstract class DriverManager extends DriverProperties {
+public abstract class DriverManager {
+
+    public static WebDriver driver;
 
     @BeforeMethod
     public void initializeDriver() {
         if (SystemUtils.IS_OS_WINDOWS) {
-            DriverProperties.setChromePropertyForWindows();
+            System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver-windows-32bit.exe");
+            driver = new ChromeDriver();
+            driver.get("http://localhost:8080/");
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         } else if (SystemUtils.IS_OS_LINUX) {
-            DriverProperties.setChromePropertyForLinux();
+            System.setProperty("webdriver.linux.driver", "drivers\\chromedriver-linux-64bit");
+            driver = new ChromeDriver();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().window().maximize();
+            driver.get("http://localhost:8080/");
         } else if (SystemUtils.IS_OS_MAC) {
-            DriverProperties.setChromePropertyForMac();
+            System.setProperty("webdriver.mac.driver", "drivers\\chromedriver-mac-64bit");
+            driver = new ChromeDriver();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.manage().window().maximize();
+            driver.get("http://localhost:8080/");
         }
     }
 
     @AfterMethod
     public void close() {
-        if (SystemUtils.IS_OS_WINDOWS) {
-            winChromeDriver.quit();
-        } else if (SystemUtils.IS_OS_LINUX) {
-            linuxChromeDriver.quit();
-        } else if (SystemUtils.IS_OS_MAC) {
-            macChromeDriver.quit();
-        }
+        driver.quit();
     }
 }

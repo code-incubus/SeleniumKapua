@@ -9,8 +9,8 @@ import pages.WelcomePage;
 public class DemoTest extends DriverManager {
 
     @Test
-    public void loginWithCorrectCredentials() {
-        LoginPage loginPage = new LoginPage(winChromeDriver);
+    public void loginWithCorrectCredentialsTest() {
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.setUsername("kapua-sys");
         loginPage.setPassword("kapua-password");
         loginPage.clickOnLoginButton();
@@ -20,7 +20,7 @@ public class DemoTest extends DriverManager {
     }
     @Test
     public void test2() {
-        LoginPage loginPage = new LoginPage(winChromeDriver);
+        LoginPage loginPage = new LoginPage(driver);
         loginPage.setUsername("username");
         loginPage.setPassword("password");
         loginPage.clickOnResetButton();
