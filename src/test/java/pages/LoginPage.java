@@ -25,18 +25,15 @@ public class LoginPage extends PageObject {
     }
 
     public void setUsername(String username) {
-        this.usernameField.clear();
         this.usernameField.sendKeys(username);
     }
 
     public void setPassword(String password) {
-        this.passwordField.clear();
         this.passwordField.sendKeys(password);
     }
 
     public void clickOnResetButton() {
-        this.usernameField.clear();
-        this.passwordField.clear();
+        resetButton.click();
     }
 
     public WelcomePage clickOnLoginButton() {
@@ -44,4 +41,7 @@ public class LoginPage extends PageObject {
         return new WelcomePage(driver);
     }
 
+    public boolean isClickable () {
+        return resetButton.isEnabled();
+    }
 }

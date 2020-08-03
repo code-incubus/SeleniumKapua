@@ -17,23 +17,16 @@ public abstract class DriverManager {
     public void initializeDriver() {
         if (SystemUtils.IS_OS_WINDOWS) {
             System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver-windows-32bit.exe");
-            driver = new ChromeDriver();
-            driver.get("http://localhost:8080/");
-            driver.manage().window().maximize();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         } else if (SystemUtils.IS_OS_LINUX) {
             System.setProperty("webdriver.linux.driver", "drivers\\chromedriver-linux-64bit");
-            driver = new ChromeDriver();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            driver.manage().window().maximize();
-            driver.get("http://localhost:8080/");
         } else if (SystemUtils.IS_OS_MAC) {
             System.setProperty("webdriver.mac.driver", "drivers\\chromedriver-mac-64bit");
-            driver = new ChromeDriver();
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            driver.manage().window().maximize();
-            driver.get("http://localhost:8080/");
         }
+
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
+        driver.get("http://localhost:8080/");
     }
 
     @AfterMethod
