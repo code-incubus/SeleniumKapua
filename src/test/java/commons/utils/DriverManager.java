@@ -1,19 +1,30 @@
 package commons.utils;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * Abstract class used for handling driver properties...
+ * @author code-incubus
+ */
 public abstract class DriverManager {
 
+    /**
+     * The static driver of this {@link DriverManager}.
+     */
     public static WebDriver driver;
 
-    @BeforeMethod
+    /**
+     * The {@link #initializeDriver()} of this {@link DriverManager}.
+     * which is used to adjust the driver depending on the OS before each test execution
+     * @see <a href="https://github.com/webdriverextensions/webdriverextensions-maven-plugin</a>
+     */
+    @Before
     public void initializeDriver() {
         if (SystemUtils.IS_OS_WINDOWS) {
             System.setProperty("webdriver.chrome.driver", "drivers\\chromedriver-windows-32bit.exe");
@@ -29,7 +40,11 @@ public abstract class DriverManager {
         driver.get("http://localhost:8080/");
     }
 
-    @AfterMethod
+    /**
+     * The {@link #close()} ()} of this {@link DriverManager}.
+     * which is used to quit driver after each test execution
+     */
+    @After
     public void close() {
         driver.quit();
     }
