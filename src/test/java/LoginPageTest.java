@@ -1,8 +1,8 @@
 import commons.utils.DriverManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import commons.utils.WatcherRule;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import pages.LoginPage;
@@ -12,14 +12,14 @@ import qa.markers.LoginTests;
 @Category(LoginTests.class)
 public class LoginPageTest extends DriverManager {
 
-    private static final Logger logger = LogManager.getLogger(LoginPageTest.class);
+    @Rule
+    public WatcherRule watcherRule = new WatcherRule();
 
     @Test
     public void loginWithCorrectCredentialsTest() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.setUsername("kapua-sys");
         loginPage.setPassword("kapua-password");
-
         WelcomePage welcomePage = loginPage.clickOnLoginButton();
         Assert.assertTrue(welcomePage.isPageOpened());
     }
