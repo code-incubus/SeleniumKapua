@@ -3,3 +3,4 @@
 target/
 drivers/
 *.xml
+.allure/
